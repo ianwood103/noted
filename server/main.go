@@ -3,22 +3,36 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"noted/config"
+	"noted/controller"
 	"noted/helper"
-
-	"github.com/julienschmidt/httprouter"
+	"noted/repository"
+	"noted/router"
+	"noted/service"
 )
 
 func main() {
 	fmt.Println("start server")
 
-	routes := httprouter.New()
+	// setup database connection
+	db := config.DatabaseConnection()
 
-	routes.GET("/", func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-		fmt.Fprint(w, "Welcome Home")
-	})
+	// setup note repository using database
+	noteRepository := repository.NewNoteRepository(db)
 
-	server := http.Server{Addr: "localhost:8888", Handler: routes}
+	// setup note service using note repository
+	noteService := service.NewNoteRepositoryImpl(noteRepository)
 
+	// setup note controller using note service
+	noteController := controller.NewNoteController(noteService)
+
+	// setup router using note controller
+	router := router.NewRouter(noteController)
+
+	// setup server using router
+	server := http.Server{Addr: "localhost:8888", Handler: router}
+
+	// start server
 	err := server.ListenAndServe()
 	helper.PanicIfError(err)
 
