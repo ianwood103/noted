@@ -79,7 +79,7 @@ func (n *NoteRepositoryImpl) Save(ctx context.Context, note model.Note) {
 	helper.PanicIfError(err)
 	defer helper.CommitOrRollback(tx)
 
-	SQL := "INSERT INTO note(text) value($1)"
+	SQL := "INSERT INTO note(text) values ($1)"
 	_, err = tx.ExecContext(ctx, SQL, note.Text)
 	helper.PanicIfError(err)
 }
