@@ -9,6 +9,8 @@ import (
 	"noted/repository"
 	"noted/router"
 	"noted/service"
+
+	"github.com/rs/cors"
 )
 
 func main() {
@@ -29,8 +31,17 @@ func main() {
 	// setup router using note controller
 	router := router.NewRouter(noteController)
 
+	// setup handler with CORS enabled
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:4200"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Content-Type", "Authorization"},
+		AllowCredentials: true,
+	})
+	handler := c.Handler(router)
+
 	// setup server using router
-	server := http.Server{Addr: "localhost:8888", Handler: router}
+	server := http.Server{Addr: "localhost:8888", Handler: handler}
 
 	// start server
 	err := server.ListenAndServe()

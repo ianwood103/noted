@@ -27,8 +27,10 @@ export interface Options {
     | boolean;
 }
 
-export interface Notes {
-  items: Note[];
+export interface NotesResponse {
+  code: number,
+  status: string,
+  data: Note[]
 }
 
 export interface Note {
