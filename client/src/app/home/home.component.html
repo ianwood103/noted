@@ -1,1 +1,11 @@
-<p>home works!</p>
+<div>
+  <div *ngIf="notes">
+    <div *ngFor="let note of notes">
+      <p>{{ note.text }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="!notes">
+    <p>Loading...</p>
+  </div>
+</div>
