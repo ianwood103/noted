@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { NotesResponse } from '../../types';
+import { NotesResponse, Note } from '../../types';
 
 @Injectable({
   providedIn: 'root',
@@ -11,5 +11,9 @@ export class NoteService {
 
   getNotes = (url: string): Observable<NotesResponse> => {
     return this.apiService.get(url, { responseType: 'json' });
+  };
+
+  createNote = (url: string, note: Note): Observable<any> => {
+    return this.apiService.post(url, note, { responseType: 'json' });
   };
 }

@@ -3,6 +3,21 @@
     <div *ngFor="let note of notes">
       <p>{{ note.text }}</p>
     </div>
+    <button (click)="showModal()">Add New Note</button>
+    <div *ngIf="showModalFlag">
+      <div class="modal">
+        <div class="modal-content">
+          <input
+            type="text"
+            [(ngModel)]="newNoteText"
+            placeholder="Enter new note"
+          />
+          <button (click)="addNewNote(newNoteText); showModalFlag = false">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div *ngIf="!notes">
