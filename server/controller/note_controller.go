@@ -12,10 +12,10 @@ import (
 )
 
 type NoteController struct {
-	NoteService service.NoteService
+	NoteService service.INoteService
 }
 
-func NewNoteController(noteService service.NoteService) *NoteController {
+func NewNoteController(noteService service.INoteService) *NoteController {
 	return &NoteController{NoteService: noteService}
 }
 

@@ -23,7 +23,7 @@ func main() {
 	noteRepository := repository.NewNoteRepository(db)
 
 	// setup note service using note repository
-	noteService := service.NewNoteRepositoryImpl(noteRepository)
+	noteService := service.NewNoteService(noteRepository)
 
 	// setup note controller using note service
 	noteController := controller.NewNoteController(noteService)
